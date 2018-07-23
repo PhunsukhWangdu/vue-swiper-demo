@@ -1,4 +1,5 @@
-const path = require('path');
+const path = require('path')
+const config = require('../config')
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
