@@ -51,8 +51,14 @@
 
       }
     },
-    mounted (){},
-    methods: {}
+    mounted (){
+      this.bindEvent();
+    },
+    methods: {
+      bindEvent () {
+        this.$el.addEventListener('touchstart', this.handleTouchStart, false);
+      }
+    }
   }
 </script>
 

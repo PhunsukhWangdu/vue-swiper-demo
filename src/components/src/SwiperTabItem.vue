@@ -38,7 +38,13 @@
         id: (this.$parent.$children.length || 1) - 1
       }
     },
+    mounted (){
+      this.bindEvent();
+    },
     methods: {
+      bindEvent () {
+        //console.log(this.$el);
+      },
       onItemClicked () {
         console.log('1111');
         this.$parent.$emit('input', this.id)
