@@ -7,14 +7,18 @@
         window[`${i}CancelRequestAnimationFrame`];
     }
   );
-  !window.requestAnimationFrame && window.requestAnimationFrame = (j) => {
+  if(!window.requestAnimationFrame) {
+    window.requestAnimationFrame = (j) => {
       let currTime = Date.now();
       let timeToCall = Math.max(0, 16.7-(currTime - lastTime));
       let id = window.setTimeout(() => j(), timeToCall);
       lastTime = currTime + timeToCall;
       return id;
     }
-  !window.cancleAnimationFrame && window.cancleAnimationFrame = (id) => {
-    window.clearTimeout(id);
+  }
+  if(!window.cancelAnimationFrame) {
+    window.cancelAnimationFrame = (id) => {
+      window.clearTimeout(id);
+    }
   }
 })()

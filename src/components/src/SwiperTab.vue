@@ -1,5 +1,6 @@
 <template>
   <div class="swiper-tab">
+    <span>{{isMoveLeft}}</span>
     <div class="swiper-tab-list">
       <slot></slot>
     </div>
@@ -7,6 +8,8 @@
 </template>
 
 <script>
+  import './utils/requestAnimationFrame';
+
   export default {
     name: 'swiper-tab',
     props: {
@@ -45,10 +48,17 @@
         default: 360
       }
     },
-    computed: {},
+    computed: {
+      isMoveLeft () {
+        return this.currentX - this.lastX;
+      }
+    },
     data () {
       return {
-
+        initialFrame: 0,
+        startX: 0,
+        lastX: 0,
+        currentX: 0,
       }
     },
     mounted (){
@@ -57,6 +67,22 @@
     methods: {
       bindEvent () {
         this.$el.addEventListener('touchstart', this.handleTouchStart, false);
+        this.$el.addEventListener('touchmove', this.handleTouchMove, false);
+        //this.$el.addEventListener('touchend', this.handleTouchEnd, false);
+      },
+      handleTouchStart (e) {
+        cancelAnimationFrame(this.initialFrame);
+        this.lastX = e.touches[0].clientX;
+      },
+      handleTouchMove (e) {
+        this.touching = true;
+        this.startX = this.lastX;
+        this.currentX = e.touches[0].clientX;
+        this.endMoveTime = event.timeStamp;
+        console.log(e);
+      },
+      handleTouchEnd (e) {
+        
       }
     }
   }
